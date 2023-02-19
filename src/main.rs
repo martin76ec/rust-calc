@@ -12,7 +12,9 @@ static SUB: fn(i32, i32) -> i32 = |l_val, r_val| -> i32 { l_val - r_val };
 
 static EXIT: fn(String) -> String = |expr: String| -> String {
     let caps = Regex::new(r"exit").unwrap().captures(&expr);
-    if caps.is_none() { return expr };
+    if caps.is_none() {
+        return expr;
+    };
     return caps.unwrap().get(0).unwrap().as_str().parse().unwrap();
 };
 
@@ -21,8 +23,12 @@ fn make_operation(rgx: String, op: fn(l_val: i32, r_val: i32) -> i32) -> impl Fn
         let mut expression = expr;
 
         loop {
-            let caps = Regex::new(rgx.as_str()).unwrap().captures(expression.as_str());
-            if caps.is_none() { break };
+            let caps = Regex::new(rgx.as_str())
+                .unwrap()
+                .captures(expression.as_str());
+            if caps.is_none() {
+                break;
+            };
 
             let caps = caps.unwrap();
             let cap_expression = caps.get(0).unwrap().as_str();
@@ -55,6 +61,8 @@ fn main() {
         expression = EXIT(expression);
 
         println!("Result: {}", expression);
-        if expression == "exit" { break };
+        if expression == "exit" {
+            break;
+        };
     }
 }
